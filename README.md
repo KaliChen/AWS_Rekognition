@@ -1,5 +1,6 @@
 # AWS_Rekognition
 
+## Face Rekognition
 ![https://ithelp.ithome.com.tw/upload/images/20201001/20119608fT70fF22Sw.jpg](https://ithelp.ithome.com.tw/upload/images/20201001/20119608fT70fF22Sw.jpg)
 ```
     def face_rekognition(self,event = None):
@@ -39,7 +40,7 @@
                 break
         cv2.destroyAllWindows()
  ```
- 
+ ## Celebrities Rekognition
  偵測知名人士
 ![https://ithelp.ithome.com.tw/upload/images/20201002/20119608Ga1TqW7KQD.jpg](https://ithelp.ithome.com.tw/upload/images/20201002/20119608Ga1TqW7KQD.jpg)
 
@@ -102,3 +103,96 @@
         webbrowser.open(final_url, new=new)
         
 ![https://ithelp.ithome.com.tw/upload/images/20201002/20119608Lbyl3t525R.jpg](https://ithelp.ithome.com.tw/upload/images/20201002/20119608Lbyl3t525R.jpg)
+
+## Label Rekognition
+![https://ithelp.ithome.com.tw/upload/images/20201003/20119608ZeQLxC1YpK.jpg](https://ithelp.ithome.com.tw/upload/images/20201003/20119608ZeQLxC1YpK.jpg)
+```
+    def label_rekognition(self, event = None):
+        client=boto3.client('rekognition')
+        img = cv2.imread(self.imageFile)
+        imOut = img
+        img_PIL = Image.open(self.imageFile)
+        width, height = img_PIL.size        
+        with open(self.imageFile, 'rb') as image:
+            label_response = client.detect_labels(
+                                Image={'Bytes': image.read()})
+        label_jsonfile = "labeloutput.json"
+        with open(label_jsonfile, 'w') as fp:
+            json.dump(label_response, fp)
+        for label in label_response['Labels']:
+            for boundingbox in label['Instances']:
+                cv2.rectangle(imOut,
+                              (int(width*boundingbox['BoundingBox']['Left']),
+                               int(height*boundingbox['BoundingBox']['Top'])),
+                              (int(width*(boundingbox['BoundingBox']['Left']+
+                               boundingbox['BoundingBox']['Width'])),
+                              int(height*(boundingbox['BoundingBox']['Top']+
+                               boundingbox['BoundingBox']['Height']))),
+                               self.color_1,
+                               int(self.linesizespinbox.get()))
+                cv2.putText(imOut,
+                            label['Name'],  
+                            (int(width*boundingbox['BoundingBox']['Left']),
+                             int(height*boundingbox['BoundingBox']['Top'])),
+                            self.fontcv2Var.get(),
+                            int(self.fontsizespinbox.get()),
+                            self.color_2,
+                            int(self.linesizespinbox.get()), 
+                            self.fontlinetypecv2Var.get())
+
+        while True:
+            cv2.imshow("Output", imOut)
+            k = cv2.waitKey(0) & 0xFF
+            # 若按下 q 鍵，則離開
+            if k == 113:
+                break
+        cv2.destroyAllWindows()
+```
+## Text Rekognition
+![https://ithelp.ithome.com.tw/upload/images/20201004/20119608Iy3ugvmXSR.jpg](https://ithelp.ithome.com.tw/upload/images/20201004/20119608Iy3ugvmXSR.jpg)
+```
+    def text_rekognition(self, event = None):
+        client=boto3.client('rekognition')
+        img = cv2.imread(self.imageFile)
+        imOut = img
+        img_PIL = Image.open(self.imageFile)
+        width, height = img_PIL.size
+        with open(self.imageFile, 'rb') as image:
+            text_response = client.detect_text(Image={'Bytes': image.read()})
+            
+        text_jsonfile = "textoutput.json"
+        with open(text_jsonfile, 'w') as fp:
+            json.dump(text_response, fp)
+
+        #i = 0
+        for text in text_response['TextDetections']:
+            #Rectangle The text BoundingBox       
+            cv2.rectangle(imOut,
+            (int(width*text['Geometry']['BoundingBox']['Left']),
+              int(height*text['Geometry']['BoundingBox']['Top'])),
+             (int(width*(text['Geometry']['BoundingBox']['Left']+
+              text['Geometry']['BoundingBox']['Width'])),
+             int(height*(text['Geometry']['BoundingBox']['Top']+
+             text['Geometry']['BoundingBox']['Height']))),
+             self.color_1,
+            int(self.linesizespinbox.get()))
+            #print the text
+            cv2.putText(imOut,
+                        text['DetectedText'],
+                        (int(width*text['Geometry']['BoundingBox']['Left']),
+                         int(height*text['Geometry']['BoundingBox']['Top'])),
+                         self.fontcv2Var.get(),
+                         int(self.fontsizespinbox.get()),
+                         self.color_2,
+                         int(self.linesizespinbox.get()), 
+                         self.fontlinetypecv2Var.get())
+            self.DisplaySceneMarkInfo.insert(tk.END,text['DetectedText']+'\n')
+
+        while True:
+            cv2.imshow("Output", imOut)
+            k = cv2.waitKey(0) & 0xFF
+            if k == 113:
+                break
+        cv2.destroyAllWindows()
+
+```
