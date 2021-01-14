@@ -1,5 +1,9 @@
 # AWS_Rekognition
 
+## UI
+![https://ithelp.ithome.com.tw/upload/images/20210114/20119608yG6ItrEQ5e.jpg](https://ithelp.ithome.com.tw/upload/images/20210114/20119608yG6ItrEQ5e.jpg)
+![https://ithelp.ithome.com.tw/upload/images/20210114/20119608dlhVKW09vV.jpg](https://ithelp.ithome.com.tw/upload/images/20210114/20119608dlhVKW09vV.jpg)
+
 ## Face Rekognition
 ![https://ithelp.ithome.com.tw/upload/images/20201001/20119608fT70fF22Sw.jpg](https://ithelp.ithome.com.tw/upload/images/20201001/20119608fT70fF22Sw.jpg)
 ```
@@ -196,3 +200,8 @@
         cv2.destroyAllWindows()
 
 ```
+ ## Compare face Rekognition
+ ![https://ithelp.ithome.com.tw/upload/images/20210114/20119608CafJ77c2u0.jpg](https://ithelp.ithome.com.tw/upload/images/20210114/20119608CafJ77c2u0.jpg)
+ ![https://ithelp.ithome.com.tw/upload/images/20210114/201196089t5kQCh8ql.jpg](https://ithelp.ithome.com.tw/upload/images/20210114/201196089t5kQCh8ql.jpg)
+ ![https://ithelp.ithome.com.tw/upload/images/20210114/20119608PKNPoolp9Y.jpg](https://ithelp.ithome.com.tw/upload/images/20210114/20119608PKNPoolp9Y.jpg)
+ ![https://ithelp.ithome.com.tw/upload/images/20210114/20119608ZaeOQGmDDS.jpg](https://ithelp.ithome.com.tw/upload/images/20210114/20119608ZaeOQGmDDS.jpg)
